@@ -1,10 +1,10 @@
-package com.vendingMachine.product;
+package com.veningmachine.products;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ProductTests {
+class ProductsApplicationTests {
 
 	@Test
 	void contextLoads() {
