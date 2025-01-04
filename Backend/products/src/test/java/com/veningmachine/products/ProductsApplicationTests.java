@@ -1,10 +1,10 @@
-package com.vendingMachine.crud;
+package com.veningmachine.products;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CrudApplicationTests {
+class ProductsApplicationTests {
 
 	@Test
 	void contextLoads() {
