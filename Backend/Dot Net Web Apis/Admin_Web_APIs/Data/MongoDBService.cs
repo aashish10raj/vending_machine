@@ -23,7 +23,8 @@ namespace Admin_Web_APIs.Data
         // Public property to access the database
         public IMongoDatabase Database => _database;
 
-        // Example: Method to get the Product collection
+       //Here implement all the collection 
+       //Format-> Get(collectionName)collection
         public IMongoCollection<ProductModel> GetProductCollection()
         {
             return _database.GetCollection<ProductModel>("Product");
