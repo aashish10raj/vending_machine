@@ -25,9 +25,17 @@ namespace Admin_Web_APIs.Data
 
        //Here implement all the collection 
        //Format-> Get(collectionName)collection
+
+        //For Product Collection
         public IMongoCollection<ProductModel> GetProductCollection()
         {
             return _database.GetCollection<ProductModel>("Product");
+        }
+
+        //For User Collection
+        public IMongoCollection<UserModel> GetUserCollection()
+        {
+            return _database.GetCollection<UserModel>("User");
         }
     }
 }
