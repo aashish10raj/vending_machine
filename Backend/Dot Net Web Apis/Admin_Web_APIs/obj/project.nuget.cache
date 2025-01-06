@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "a88v6GfYH/frWzo21muVpDbBgyNnAmmhoGjPywt10b7vGE/eNTOIImATqFsDBQotGOiUu+W3BQsuGNPiwTFskA==",
+  "dgSpecHash": "okmQp4APpV4IAZ3wCJZkbpPDEJiAvAq2NjRThNFA8T/L9SFoDnzhm9tb+1esOGTWsJejUoGzCcuHkhisCTQH3w==",
   "success": true,
   "projectFilePath": "E:\\React\\vendingmachine\\Git\\vending_machine\\Backend\\Dot Net Web Apis\\Admin_Web_APIs\\Admin_Web_APIs.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\ASUS\\.nuget\\packages\\bcrypt.net-next\\3.5.0\\bcrypt.net-next.3.5.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\2.0.0\\microsoft.extensions.logging.abstractions.2.0.0.nupkg.sha512",

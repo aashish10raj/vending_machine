@@ -36,3 +36,4 @@ E:\React\vendingmachine\Git\vending_machine\Backend\Dot Net Web Apis\Admin_Web_A
 E:\React\vendingmachine\Git\vending_machine\Backend\Dot Net Web Apis\Admin_Web_APIs\obj\Debug\net6.0\Admin_Web_APIs.pdb
 E:\React\vendingmachine\Git\vending_machine\Backend\Dot Net Web Apis\Admin_Web_APIs\obj\Debug\net6.0\Admin_Web_APIs.genruntimeconfig.cache
 E:\React\vendingmachine\Git\vending_machine\Backend\Dot Net Web Apis\Admin_Web_APIs\obj\Debug\net6.0\ref\Admin_Web_APIs.dll
+E:\React\vendingmachine\Git\vending_machine\Backend\Dot Net Web Apis\Admin_Web_APIs\bin\Debug\net6.0\BCrypt.Net-Next.dll
