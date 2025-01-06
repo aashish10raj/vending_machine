@@ -1,4 +1,5 @@
 import react from "react";
+import { Link } from "react-router-dom";
 
 
 
@@ -9,8 +10,9 @@ return(
     bg-secondary text-white">
 
         <h1 className="m-0">VENDING MACHINE</h1>
-
+        <Link to="/login">
         <button className="btn btn-primary m-8 bg- white"> LOG IN </button>
+        </Link>
     </header>
 );}
 
