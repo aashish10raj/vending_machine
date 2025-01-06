@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { fetchProducts } from '../../services/homepageProducts';
+import './homePage.css';
 
 const ProductGrid = () => {
   const [products, setProducts] = useState([]);
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -18,18 +20,38 @@ const ProductGrid = () => {
     getProducts();
   }, []);
 
+  const handleShowAll = () => {
+    setShowAll(true);
+  };
+  const handleCollapse = () => {
+    setShowAll(false);
+  };
+  
+
   return (
-    <div className="product-grid">
-      {products.map((product) => (
-        <div key={product.id} className="product-tile">
-          <img src={product.imageUrl} alt={product.productName} className="product-image" />
-          <div className="product-details">
-            <div className="product-name">{product.productName}</div>
-            <div className="product-price">${product.price}</div>
-            <div className="product-quantity">Quantity: {product.quantity}</div>
+    <div className="container mt-4">
+      <div className="row">
+        {(showAll ? products : products.slice(0, 6)).map((product) => (
+          <div key={product.id} className="col-md-4 mb-4">
+            <div className="card h-100">
+              <img src={product.imageUrl} alt={product.productName} className="card-img-top product-image" />
+              <div className="card-body">
+                <h5 className="card-title">{product.productName}</h5>
+                <p className="card-text">Price: ₹{product.price}</p>
+                <p className="card-text">Quantity: {product.quantity}</p>
+              </div>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+      <div className="text-center mt-4">
+        {!showAll && products.length > 6 && (
+          <button className="btn btn-primary custom-button" onClick={handleShowAll}>Show all products</button>
+        )}
+        {showAll && (
+          <button className="btn btn-info custom-collapse" onClick={handleCollapse}>Collapse</button>
+        )}
+      </div>
     </div>
   );
 };
