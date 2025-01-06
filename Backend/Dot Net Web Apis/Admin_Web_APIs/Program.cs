@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<MongoDbService>(); //Adding MongoDBservice here for DI
 
-
+//Adding CORS policy for calling with the React side
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy =>
