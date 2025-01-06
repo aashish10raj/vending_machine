@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+
+//modify this url to point to your backend
 const API_URL = 'http://localhost:8080/vendingapi/products';
 
 export const fetchProducts = async () => {
