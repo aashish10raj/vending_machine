@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchProducts } from '../../services/homepageProducts';
+import { fetchProducts } from '../../services/DisplayProducts';
 import './homePage.css';
 
 const ProductGrid = () => {
@@ -37,6 +37,7 @@ const ProductGrid = () => {
               <img src={product.imageUrl} alt={product.productName} className="card-img-top product-image" />
               <div className="card-body">
                 <h5 className="card-title">{product.productName}</h5>
+              { /* <h5 className="card-title">{product.product_name}</h5>*/ } {/* adding for dot net as name in mongodb is product_name*/ }
                 <p className="card-text">Price: ₹{product.price}</p>
                 <p className="card-text">Quantity: {product.quantity}</p>
               </div>
