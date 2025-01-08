@@ -19,6 +19,7 @@ public class AuthController {
     public ResponseEntity<Boolean> login(@RequestBody Map<String, Object> loginRequest) {
         Integer userId = (Integer) loginRequest.get("user_id"); // Parse as integer
         String password = (String) loginRequest.get("password");
+        System.out.println(userId);
         boolean isLoggedIn = authService.login(userId, password);
         return isLoggedIn ? ResponseEntity.ok(true) : ResponseEntity.status(401).body(false);
     }
