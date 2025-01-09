@@ -1,16 +1,13 @@
-package com.vendingmachine.login;
+package com.vendingmachine.apigateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class UsersApplication {
+public class ApiGatewayApplication {
 
 	public static void main(String[] args) {
-
-		SpringApplication.run(UsersApplication.class, args);
-
+		SpringApplication.run(ApiGatewayApplication.class, args);
 	}
-
 }
