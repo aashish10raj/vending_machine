@@ -18,7 +18,7 @@ public class ProductsController {
     @Autowired
     private ProductsService productsService;
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     public List<Products> getAllProducts() {
         return productsService.getAllProducts();
