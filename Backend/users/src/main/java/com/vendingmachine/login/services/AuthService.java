@@ -1,10 +1,9 @@
-package com.vendingmachine.login.service;
+package com.vendingmachine.login.services;
 
 
 import com.vendingmachine.login.model.Users;
 import com.vendingmachine.login.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

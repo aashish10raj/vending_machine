@@ -1,7 +1,6 @@
 package com.vendingmachine.login.controller;
 
-import com.vendingmachine.login.model.Users;
-import com.vendingmachine.login.service.AuthService;
+import com.vendingmachine.login.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
