@@ -17,17 +17,25 @@ public class AuthService {
 //    private BCryptPasswordEncoder passwordEncoder;
 
 
-    public boolean login(int user_id, String password) {
-        Optional<Users> userOpt = userRepository.findByUserId(user_id);
-        if (userOpt.isPresent()) {
-            Users user = userOpt.get();
-            System.out.println("User found: " + user.getName());
-            System.out.println("Stored password: " + user.getPassword());
-            System.out.println("Input password: " + password);
-            return password.equals(user.getPassword());
-        }
-        System.out.println("User not found for user_id: " + user_id);
-        return false;
+//    public boolean login(int user_id, String password) {
+//        Optional<Users> userOpt = userRepository.findByUserId(user_id);
+//        if (userOpt.isPresent()) {
+//            Users user = userOpt.get();
+//            System.out.println("User found: " + user.getName());
+//            System.out.println("Stored password: " + user.getPassword());
+//            System.out.println("Input password: " + password);
+//            return password.equals(user.getPassword());
+//        }
+//        System.out.println("User not found for user_id: " + user_id);
+//        return false;
+//    }
+public Optional<Users> authenticate(int userId, String password) {
+    Optional<Users> userOpt = userRepository.findByUserId(userId);
+    if (userOpt.isPresent() && password.equals(userOpt.get().getPassword())) {
+        return userOpt;
     }
+    return Optional.empty();
+
+}
 
 }

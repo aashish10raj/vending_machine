@@ -15,7 +15,7 @@ public class SecurityConfig {
             http.csrf(csrfConfigurer -> csrfConfigurer.disable())
                     .authorizeHttpRequests(authorizeHttpRequestsConfigurer ->
                             authorizeHttpRequestsConfigurer
-                                    .requestMatchers("/vendingmachine/auth/login").permitAll()
+                                    .requestMatchers("/vendingmachine/auth/**").permitAll()
                                     .anyRequest().authenticated());
             return http.build();
         }
