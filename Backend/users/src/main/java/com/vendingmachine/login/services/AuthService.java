@@ -3,6 +3,7 @@ package com.vendingmachine.login.services;
 
 import com.vendingmachine.login.model.Users;
 import com.vendingmachine.login.repository.UserRepository;
+import com.vendingmachine.login.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,9 @@ import java.util.Optional;
 public class AuthService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
 //    @Autowired
 //    private BCryptPasswordEncoder passwordEncoder;
@@ -35,7 +39,10 @@ public Optional<Users> authenticate(int userId, String password) {
         return userOpt;
     }
     return Optional.empty();
-
 }
+
+    public String generateJwtToken(Users user) {
+        return jwtUtil.generateToken(user.getName(), user.getRole());
+    }
 
 }
