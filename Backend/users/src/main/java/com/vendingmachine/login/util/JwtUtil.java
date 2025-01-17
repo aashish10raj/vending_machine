@@ -19,7 +19,6 @@ public class JwtUtil {
     public String generateToken(String username, boolean isAdmin) {
         return Jwts.builder()
                 .setSubject(username)
-                .claim("isAdmin", isAdmin)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
@@ -34,10 +33,26 @@ public class JwtUtil {
     }
 
     public boolean isTokenValid(String token, String username) {
-        return username.equals(extractClaims(token).getSubject()) && !isTokenExpired(token);
+        final String extractedUsername = extractUsername(token);
+        return (extractedUsername.equals(username) && !isTokenExpired(token));
     }
 
     private boolean isTokenExpired(String token) {
         return extractClaims(token).getExpiration().before(new Date());
+    }
+
+    public String extractUsername(String token) {
+        return extractClaim(token, Claims::getSubject);
+    }
+
+    public <T> T extractClaim(String token, java.util.function.Function<Claims, T> claimsResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver.apply(claims);
+    }
+    private Claims extractAllClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(SECRET_KEY)
+                .parseClaimsJws(token)
+                .getBody();
     }
 }

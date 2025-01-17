@@ -31,7 +31,7 @@ public class AdminController {
         }
         boolean added = adminService.addAdmin(admin);
         if (added) {
-            return ResponseEntity.ok("Admin added successfully!");
+            return ResponseEntity.ok("User added successfully!");
         } else {
             return ResponseEntity.status(400).body("Failed to add admin. User ID might already exist.");
         }

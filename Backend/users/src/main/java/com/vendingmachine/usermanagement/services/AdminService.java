@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class AdminService {
@@ -19,8 +20,15 @@ public class AdminService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    // Method to generate random numbers between 501 and 1000
+    public int generateRandomId() {
+        Random random = new Random();
+        return random.nextInt(500) + 501;  // 500 is the range, 501 is the starting point
+    }
+
     //add a new admin
     public boolean addAdmin(Users admin) {
+        int randomId = generateRandomId();
         //check if user already present
         Optional<Users> existingUser = userRepository.findByUserId(admin.getUserId());
         if(existingUser.isPresent()){
@@ -28,10 +36,11 @@ public class AdminService {
         }
 
         //set role as admin and encrypt the password
-        admin.setRole(true);
+        admin.setRole(admin.getRole());
         admin.setName(admin.getName());
         admin.setUserId(admin.getUserId());
         admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+        admin.setId(randomId);
 
         userRepository.save(admin);
         return true;
