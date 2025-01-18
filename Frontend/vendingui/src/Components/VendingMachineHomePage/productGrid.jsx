@@ -35,6 +35,7 @@ const ProductGrid = () => {
           <div key={product.id} className="col-md-4 mb-4">
             <div className="card h-100">
               <img src={product.imageUrl} alt={product.productName} className="card-img-top product-image" />
+              {/*<img src={product.imageUrl} alt={product.product_name} className="card-img-top product-image" /> */ }{/* adding for dot net as name in mongodb is product_name*/ }
               <div className="card-body">
                 <h5 className="card-title">{product.productName}</h5>
               { /* <h5 className="card-title">{product.product_name}</h5>*/ } {/* adding for dot net as name in mongodb is product_name*/ }
