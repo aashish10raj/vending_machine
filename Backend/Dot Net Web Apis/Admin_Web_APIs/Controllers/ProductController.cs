@@ -29,7 +29,7 @@ namespace Admin_Web_APIs.Controllers
             return Ok(products);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}")]//to get the product based on id
 
         public IActionResult GetProduct(Int32 id)
         {
