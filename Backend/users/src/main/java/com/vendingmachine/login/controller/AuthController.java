@@ -1,12 +1,17 @@
 package com.vendingmachine.login.controller;
 
 import com.vendingmachine.login.model.Users;
-import com.vendingmachine.login.service.AuthService;
+import com.vendingmachine.login.services.AuthService;
+import com.vendingmachine.login.util.JwtUtil;
+import com.vendingmachine.usermanagement.controller.AdminController;
+import com.vendingmachine.usermanagement.controller.BuyerController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/vendingmachine/auth")
@@ -15,13 +20,55 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private AdminController adminController;
+
+    @Autowired
+    private BuyerController buyerController;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
     @PostMapping("/login")
-    public ResponseEntity<Boolean> login(@RequestBody Map<String, Object> loginRequest) {
+    public ResponseEntity<Map<String, Object>>  login(@RequestBody Map<String, Object> loginRequest) {
         Integer userId = (Integer) loginRequest.get("user_id"); // Parse as integer
         String password = (String) loginRequest.get("password");
         System.out.println(userId);
-        boolean isLoggedIn = authService.login(userId, password);
-        return isLoggedIn ? ResponseEntity.ok(true) : ResponseEntity.status(401).body(false);
+        // Authenticate user
+        Optional<Users> userOpt = authService.authenticate(userId, password);
+        if (userOpt.isPresent()) {
+            Users user = userOpt.get();
+            // Generate JWT Token
+            String token = authService.generateJwtToken(user);
+            //response map
+            Map<String, Object> response = new HashMap<>();
+            response.put("token", token);
+
+            // Redirect to respective endpoint
+//            if (user.getRole()) {
+//                // If admin, call the Admin endpoint directly
+//                return ResponseEntity.ok(adminController.getAdmin());
+//            } else {
+//                // If buyer, call the Buyer endpoint directly
+//                return ResponseEntity.ok(buyerController.getBuyer());
+//            }
+//        }
+//
+//        // Unauthorized response
+//        return ResponseEntity.status(401).body("Invalid user ID or password");
+            if (user.getRole()) { // If admin
+                response.put("role", "admin");
+                response.put("message", adminController.getAdmin());
+            } else { // If buyer
+                response.put("role", "buyer");
+                response.put("message", buyerController.getBuyer());
+            }
+
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(401).body(Map.of("error", "Invalid credentials"));
+        }
+
     }
 
 
