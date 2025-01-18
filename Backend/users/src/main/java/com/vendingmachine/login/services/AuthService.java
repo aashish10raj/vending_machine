@@ -5,6 +5,7 @@ import com.vendingmachine.login.model.Users;
 import com.vendingmachine.login.repository.UserRepository;
 import com.vendingmachine.login.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,8 +18,8 @@ public class AuthService {
     @Autowired
     private JwtUtil jwtUtil;
 
-//    @Autowired
-//    private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
 
 //    public boolean login(int user_id, String password) {
@@ -35,9 +36,13 @@ public class AuthService {
 //    }
 public Optional<Users> authenticate(int userId, String password) {
     Optional<Users> userOpt = userRepository.findByUserId(userId);
-    if (userOpt.isPresent() && password.equals(userOpt.get().getPassword())) {
+//    if (userOpt.isPresent() && password.equals(userOpt.get().getPassword())) {
+//        return userOpt;
+//    }
+    if (userOpt.isPresent() && passwordEncoder.matches(password, userOpt.get().getPassword())) {
         return userOpt;
     }
+
     return Optional.empty();
 }
 
