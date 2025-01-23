@@ -15,19 +15,14 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/vendingmachine/auth")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {
     @Autowired
     private AuthService authService;
 
     @Autowired
-    private AdminController adminController;
-
-    @Autowired
-    private BuyerController buyerController;
-
-    @Autowired
     private JwtUtil jwtUtil;
+
 
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, Object> loginRequest) {
@@ -60,4 +55,4 @@ public class AuthController {
     }
 
     }
-    
+
