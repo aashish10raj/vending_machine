@@ -1,15 +1,17 @@
-import react from "react";
+import React from "react";
 import "./footer.css";
 
-const Footer =()=>{
-
-    return(
-
-        <footer className="bg-secondary text-white text-center py-3">
-            <p className="text-white"> Made with <i class="bi bi-heart-fill"></i> by Abhi & Aashish </p>
-           </footer>
-    );
-
-}
+const Footer = () => {
+  return (
+    <div className="container">
+      <div className="content">
+        
+      </div>
+      <div className="footer">
+        <p>Vending Machine</p>
+      </div>
+    </div>
+  );
+};
 
 export default Footer;
