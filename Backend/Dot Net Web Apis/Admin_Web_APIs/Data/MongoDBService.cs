@@ -37,5 +37,7 @@ namespace Admin_Web_APIs.Data
         {
             return _database.GetCollection<UserModel>("User");
         }
+
+        
     }
 }

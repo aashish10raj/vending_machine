@@ -21,6 +21,7 @@ public class ProductsController {
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     public List<Products> getAllProducts() {
+
         return productsService.getAllProducts();
     }
 }

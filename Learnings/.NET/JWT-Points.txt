@@ -1,0 +1,20 @@
+For JWT:-
+
+1. we have to add JWT in program .cs there we have to write the valid issuer,valid audience and signing keys.
+
+2. also to implement the role based authorization we have to add the policy in program.cs under builder.service.addauthorization.Then only we can use the authorization based on role.
+
+3. let say we are creating the token after the username and pass matches then for that "generatejwttoken" we have to send claims under claims we can send the role of the user or else whatever required in this project I have sent the role and username, also signing key should be matching, obviously we can add these hard coded terms in the appsetting.json and from any where we can call them.
+
+4. Also expiry time of token is required else it will be invalid token.
+
+5. For the testing purpose I have configured the swagger as well to take the JWT token as a header for admin apis.
+
+6. JWT.io helps in decoding the JWT token,
+
+7. how does it works?
+ans- After successful login we are generating 1 token which will contain claims,signing key. and let say now we are calling the api of admincontroller, the token will be passed in theheader of the request if it doesn't match we will not be able to use the api.
+
+
+
+

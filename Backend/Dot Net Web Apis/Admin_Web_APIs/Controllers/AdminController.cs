@@ -3,11 +3,15 @@ using Admin_Web_APIs.Model;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using BCrypt.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Admin_Web_APIs.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize(Roles = "Admin")]
     [ApiController]
+    [Route("api/[controller]")]
+
+ 
     public class AdminController : ControllerBase
     {
         private readonly MongoDbService _mongoDbService;

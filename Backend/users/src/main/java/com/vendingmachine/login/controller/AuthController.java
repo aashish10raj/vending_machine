@@ -15,61 +15,44 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/vendingmachine/auth")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {
     @Autowired
     private AuthService authService;
 
     @Autowired
-    private AdminController adminController;
-
-    @Autowired
-    private BuyerController buyerController;
-
-    @Autowired
     private JwtUtil jwtUtil;
 
+
     @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>>  login(@RequestBody Map<String, Object> loginRequest) {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, Object> loginRequest) {
         Integer userId = (Integer) loginRequest.get("user_id"); // Parse as integer
         String password = (String) loginRequest.get("password");
-        System.out.println(userId);
+
         // Authenticate user
         Optional<Users> userOpt = authService.authenticate(userId, password);
+
         if (userOpt.isPresent()) {
             Users user = userOpt.get();
+
             // Generate JWT Token
             String token = authService.generateJwtToken(user);
-            //response map
+
+            // Build the response map
             Map<String, Object> response = new HashMap<>();
             response.put("token", token);
-
-            // Redirect to respective endpoint
-//            if (user.getRole()) {
-//                // If admin, call the Admin endpoint directly
-//                return ResponseEntity.ok(adminController.getAdmin());
-//            } else {
-//                // If buyer, call the Buyer endpoint directly
-//                return ResponseEntity.ok(buyerController.getBuyer());
-//            }
-//        }
-//
-//        // Unauthorized response
-//        return ResponseEntity.status(401).body("Invalid user ID or password");
-            if (user.getRole()) { // If admin
-                response.put("role", "admin");
-                response.put("message", adminController.getAdmin());
-            } else { // If buyer
-                response.put("role", "buyer");
-                response.put("message", buyerController.getBuyer());
-            }
+            response.put("role", user.getRole() ? "admin" : "buyer");
+            response.put("message", user.getRole() ? "Admin privileges granted" : "Buyer privileges granted");
 
             return ResponseEntity.ok(response);
         } else {
-            return ResponseEntity.status(401).body(Map.of("error", "Invalid credentials"));
+            // Unauthorized response
+            return ResponseEntity.status(401).body(Map.of(
+                    "error", "Invalid credentials",
+                    "message", "Please check your user ID and password"
+            ));
         }
+    }
 
     }
 
-
-}
