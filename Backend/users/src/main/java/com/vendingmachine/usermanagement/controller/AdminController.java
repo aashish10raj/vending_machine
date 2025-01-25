@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/vendingmachine/admin")
 @CrossOrigin
@@ -14,9 +16,10 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-    @GetMapping
-    public String getAdmin() {
-        return "Admin";
+    @GetMapping("/getAllUsers")
+    public ResponseEntity<List<Users>> getAllUsers() {
+        List<Users> users = adminService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 
     @PostMapping("/addadmin")

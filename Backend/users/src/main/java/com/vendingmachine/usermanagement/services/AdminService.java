@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -23,7 +24,10 @@ public class AdminService {
         Random random = new Random();
         return random.nextInt(500) + 501;  // 500 is the range, 501 is the starting point
     }
-
+    // Get all users
+    public List<Users> getAllUsers() {
+        return userRepository.findAll();
+    }
     // Add a new admin
     public boolean addAdmin(Users admin) {
         int randomId = generateRandomId();
