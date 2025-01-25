@@ -62,7 +62,11 @@ public class AdminController {
 
     // Update admin name by user ID
     @PutMapping("/updateadmin/{userId}")
-    public ResponseEntity<String> updateAdminName(@PathVariable int userId, @RequestParam String newName, @RequestAttribute(name = "isAdmin", required = false) Boolean isAdmin) {
+    public ResponseEntity<String> updateAdminName(
+            @PathVariable int userId,
+            @RequestParam String newName,
+            @RequestAttribute(name = "isAdmin", required = false) Boolean isAdmin
+    ) {
         if (isAdmin == null || !isAdmin) {
             return ResponseEntity.status(403).body("Forbidden: You need admin privileges to perform this action.");
         }
@@ -75,4 +79,5 @@ public class AdminController {
             return ResponseEntity.status(404).body("Admin with given ID not found.");
         }
     }
+
 }

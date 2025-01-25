@@ -1,110 +1,96 @@
-import React, { useState, useEffect } from 'react';
-import BuyersService from '../../services/BuyersService';
+import React, { useEffect, useState } from 'react';
+import { fetchUsers, updateUserName, deleteUser } from "../../services/BuyersService";  
+
 
 const ManageBuyers = () => {
   const [users, setUsers] = useState([]);
-  const [newAdmin, setNewAdmin] = useState({ userId: '', name: '', password: '', role: false });
-  const [updatedName, setUpdatedName] = useState('');
-  const [userIdToDelete, setUserIdToDelete] = useState('');
+  const [showAll, setShowAll] = useState(false);
 
-  // Fetch all users on component mount
   useEffect(() => {
-    const fetchUsers = async () => {
+    const getUsers = async () => {
       try {
-        const users = await BuyersService.getAllUsers();
-        setUsers(users);
+        const usersData = await fetchUsers();
+        setUsers(usersData);
       } catch (error) {
-        console.error("Error fetching users:", error);
+        console.error('Error fetching users:', error);
       }
     };
-    fetchUsers();
+    getUsers();
   }, []);
 
-  const handleAddAdmin = async () => {
-    try {
-      const response = await BuyersService.addAdmin(newAdmin);
-      console.log(response);
-      setUsers([...users, newAdmin]);  // Add the new admin to the list
-    } catch (error) {
-      console.error("Error adding admin:", error);
+  const handleUpdateName = async (userId) => {
+    const newName = prompt('Enter new name:');
+    if (newName) {
+      try {
+        await updateUserName(userId, newName);
+        setUsers(users.map(user => user.userId === userId ? { ...user, name: newName } : user));
+      } catch (error) {
+        console.error('Error updating name:', error);
+      }
     }
   };
 
-  const handleDeleteAdmin = async () => {
-    try {
-      const response = await BuyersService.deleteAdmin(userIdToDelete);
-      console.log(response);
-      setUsers(users.filter(user => user.userId !== userIdToDelete)); // Remove deleted user from list
-    } catch (error) {
-      console.error("Error deleting admin:", error);
+  const handleDeleteUser = async (userId) => {
+    if (window.confirm('Are you sure you want to delete this user?')) {
+      try {
+        await deleteUser(userId);
+        setUsers(users.filter(user => user.id !== userId));
+      } catch (error) {
+        console.error('Error deleting user:', error);
+      }
     }
   };
 
-  const handleUpdateAdminName = async () => {
-    try {
-      const response = await BuyersService.updateAdminName(userIdToDelete, updatedName);
-      console.log(response);
-      setUsers(users.map(user => user.userId === userIdToDelete ? { ...user, name: updatedName } : user)); // Update name in list
-    } catch (error) {
-      console.error("Error updating admin name:", error);
-    }
+  const handleShowAll = () => {
+    setShowAll(true);
+  };
+
+  const handleCollapse = () => {
+    setShowAll(false);
   };
 
   return (
-    <div>
-      <h1>Manage Buyers</h1>
-      
-      {/* Display the list of users */}
-      <h2>Users List</h2>
-      <ul>
-        {users.map(user => (
-          <li key={user.userId}>
-            {user.name} ({user.userId})
-          </li>
+    <div className="container mt-4">
+      <div className="row">
+        {(showAll ? users : users.slice(0, 6)).map((user) => (
+          <div key={user.id} className="col-md-4 mb-4">
+            <div className="card h-100">
+              <div className="card-body">
+                <h5 className="card-title">{user.name}</h5>
+                <p className="card-text">User ID: {user.userId}</p>
+                <p className="card-text">Role: {user.isadmin ? 'Admin' : 'Buyer'}</p>
+                {/* Buttons for modifying name and deleting the user */}
+                <div className="d-flex justify-content-between mt-3">
+                  <button
+                    className="btn btn-sm btn-warning"
+                    onClick={() => handleUpdateName(user.userId)}
+                  >
+                    Update Name
+                  </button>
+                  <button
+                    className="btn btn-sm btn-danger"
+                    onClick={() => handleDeleteUser(user.userId)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         ))}
-      </ul>
-
-      {/* Form to add a new admin */}
-      <h2>Add Admin</h2>
-      <input
-        type="text"
-        placeholder="User ID"
-        value={newAdmin.userId}
-        onChange={e => setNewAdmin({ ...newAdmin, userId: e.target.value })}
-      />
-      <input
-        type="text"
-        placeholder="Name"
-        value={newAdmin.name}
-        onChange={e => setNewAdmin({ ...newAdmin, name: e.target.value })}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={newAdmin.password}
-        onChange={e => setNewAdmin({ ...newAdmin, password: e.target.value })}
-      />
-      <button onClick={handleAddAdmin}>Add Admin</button>
-
-      {/* Form to delete an admin */}
-      <h2>Delete Admin</h2>
-      <input
-        type="text"
-        placeholder="User ID to Delete"
-        value={userIdToDelete}
-        onChange={e => setUserIdToDelete(e.target.value)}
-      />
-      <button onClick={handleDeleteAdmin}>Delete Admin</button>
-
-      {/* Form to update admin name */}
-      <h2>Update Admin Name</h2>
-      <input
-        type="text"
-        placeholder="New Name"
-        value={updatedName}
-        onChange={e => setUpdatedName(e.target.value)}
-      />
-      <button onClick={handleUpdateAdminName}>Update Name</button>
+      </div>
+      <div className="text-center mt-4">
+        {!showAll && users.length > 6 && (
+          <button className="btn btn-primary custom-button" onClick={handleShowAll}>
+            Show all users
+          </button>
+        )}
+        {showAll && (
+          <button className="btn btn-info custom-collapse" onClick={handleCollapse}>
+            Collapse
+          </button>
+        )}
+      </div>
     </div>
   );
 };
