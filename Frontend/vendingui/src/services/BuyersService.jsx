@@ -19,7 +19,14 @@ export const fetchUsers = async () => {
     throw error;
   }
 };
-
+export const addUser = async (user) => {
+    try {
+      await axios.post(`${API_URL}/addadmin`, user, config);
+    } catch (error) {
+      console.error("Error adding user:", error);
+      throw error;
+    }
+};
 // export const updateUserName = async (userId, newName) => {
 //     try {
 //         const response = await axios.put(
