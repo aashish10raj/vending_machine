@@ -1,9 +1,28 @@
+/* Reset margins and paddings for the page */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%; /* Ensure full height for the page */
+}
+
+/* The main container must occupy the full height of the page */
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding-top: 30%;
+}
+
+/* The content should grow to fill the space between header and footer */
+.content {
+  flex: 1;
+}
+
+/* Footer styling */
 .footer {
-    width: 100%;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 10px 0;
-    position: absolute;
-    bottom: 0;
-  }
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+}

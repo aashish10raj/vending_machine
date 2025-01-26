@@ -19,6 +19,7 @@ public class JwtUtil {
     public String generateToken(String username, boolean isAdmin) {
         return Jwts.builder()
                 .setSubject(username)
+                .claim("isAdmin", isAdmin)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
@@ -43,6 +44,10 @@ public class JwtUtil {
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
+    }
+
+    public boolean extractIsAdmin(String token) {
+        return extractClaim(token, claims -> claims.get("isAdmin", Boolean.class)); // Extract the isAdmin claim
     }
 
     public <T> T extractClaim(String token, java.util.function.Function<Claims, T> claimsResolver) {

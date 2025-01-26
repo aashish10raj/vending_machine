@@ -7,6 +7,9 @@ import VendingMachineHomePage from "./Components/VendingMachineHomePage/homePage
 import LoginPage from "./Components/LoginPage/login";
 import AdminPortal from "./Components/AdminPortal/AdminPortal";
 import BuyerPortal from "./Components/BuyerPortal/BuyerPortal";
+import ManageProducts from "./Components/AdminPortal/ManageProducts";
+import ManageBuyers from "./Components/AdminPortal/ManageBuyers";
+
 
 const App = () => {
 
@@ -20,6 +23,8 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/admin" element={<AdminPortal />} />
         <Route path="/buyer" element={<BuyerPortal />} />
+        <Route path="/manage-products" element={<ManageProducts />} />
+        <Route path="/manage-buyers" element={<ManageBuyers />} />
         </Routes>
       <Footer />
     </div>
