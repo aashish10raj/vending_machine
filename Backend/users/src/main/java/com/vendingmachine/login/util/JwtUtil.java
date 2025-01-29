@@ -13,7 +13,7 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256); // Generates a secure key
+    private static final String SECRET_KEY = "h9jcyU+8TCpyHhAtEAEmt6ZQjdBUsmsZjBYlVylfowY="; // Generates a secure key
     private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 12; // 12 hours
 
     public String generateToken(String username, boolean isAdmin) {
