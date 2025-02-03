@@ -1,12 +1,16 @@
 package com.vendingmachine.usermanagement.controller;
 
 import com.vendingmachine.login.model.Users;
+import com.vendingmachine.usermanagement.model.Balance;
 import com.vendingmachine.usermanagement.services.AdminService;
+import com.vendingmachine.usermanagement.services.BalanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/vendingmachine/admin")
@@ -15,6 +19,9 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private BalanceService balanceService;
 
     @GetMapping("/getAllUsers")
     public ResponseEntity<List<Users>> getAllUsers() {
@@ -80,6 +87,20 @@ public class AdminController {
         }
     }
 
+    // Get balance by userId
+    @GetMapping("/getbalance/{userId}")
+    public ResponseEntity<?> getBalance(@PathVariable int userId) {
+        Optional<Balance> balance = balanceService.getBalanceByUserId(userId);
+        return balance.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    // Update balance for a user
+    @PostMapping("/getbalance/{userId}")
+    public ResponseEntity<?> updateBalance(@PathVariable int userId, @RequestBody Map<String, Double> requestBody) {
+        double amount = requestBody.get("balance");
+        Balance updatedBalance = balanceService.createOrUpdateBalance(userId, amount);
+        return ResponseEntity.ok(updatedBalance);
+    }
 
 
 }

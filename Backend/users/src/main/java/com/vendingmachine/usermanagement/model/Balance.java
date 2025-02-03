@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "Balance")
 public class Balance {
 
-    @Id
+
     private int userId;
 
     public int getUserId() {
