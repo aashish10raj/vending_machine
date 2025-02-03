@@ -73,4 +73,27 @@ export const deleteUser = async (userId) => {
   }
 };
 
+export const fetchUserBalance = async (userId) => {
+  try {
+    const response = await axios.get(`${API_URL}/getbalance/${userId}`, config);
+    return response.data.balance || 0;  // Return balance or 0 if not found
+  } catch (error) {
+    console.error("Error fetching balance:", error);
+    return 0; // Default to 0 if there's an error
+  }
+};
+
+export const updateUserBalance = async (userId, newBalance) => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/updatebalance/${userId}`,
+      { balance: newBalance }, // Sending balance in request body
+      config
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating balance:", error);
+    throw error;
+  }
+};
 
