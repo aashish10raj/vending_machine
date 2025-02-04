@@ -86,7 +86,7 @@ export const fetchUserBalance = async (userId) => {
 export const updateUserBalance = async (userId, newBalance) => {
   try {
     const response = await axios.post(
-      `${API_URL}/updatebalance/${userId}`,
+      `${API_URL}/getbalance/${userId}`,
       { balance: newBalance }, // Sending balance in request body
       config
     );
