@@ -24,17 +24,33 @@ const BuyerPortal = () => {
     }
   };
 
+  // const addToCart = (product) => {
+  //   setCart((prevCart) => [...prevCart, product]);
+  // };
   const addToCart = (product) => {
-    setCart((prevCart) => [...prevCart, product]);
+    setCart((prevCart) => {
+      // Check if product already exists in cart
+      const existingProduct = prevCart.find((item) => item.id === product.id);
+      if (existingProduct) return prevCart; // Prevent duplicate entry
+      return [...prevCart, product];
+    });
   };
+  
 
   const calculateTotal = () => {
     return cart.reduce((total, item) => total + item.price, 0);
   };
 
   const handleCheckout = async () => {
-    const totalAmount = calculateTotal();
-    const response = await PurchaseService.checkout(userToken, cart, totalAmount);
+    // const totalAmount = calculateTotal();
+    const totalAmount = parseFloat(calculateTotal());
+    const cartWithFloatPrices = cart.map(item => ({
+      ...item,
+      price: parseFloat(item.price) // ✅ Ensure price is always a float
+    }));
+  
+    const response = await PurchaseService.checkout(userToken, cartWithFloatPrices, totalAmount);
+    
     if (response.success) {
       alert("Purchase Successful!");
       setCart([]);
@@ -43,10 +59,19 @@ const BuyerPortal = () => {
       alert(response.message);
     }
   };
+  //   const response = await PurchaseService.checkout(userToken, cart, totalAmount);
+  //   if (response.success) {
+  //     alert("Purchase Successful!");
+  //     setCart([]);
+  //     fetchUserBalance();
+  //   } else {
+  //     alert(response.message);
+  //   }
+  // };
 
   return (
     <div className="container mt-4">
-      <h2>Buyer Portal</h2>
+      <h2>Welcome </h2>
       <h4>Balance: ₹{balance}</h4>
 
       <div className="row">

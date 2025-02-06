@@ -17,6 +17,8 @@ const PurchaseService = {
     }
   },
 
+
+
   getUserBalance: async (token) => {
     try {
       const response = await axios.get(`${API_URL}/getbalance`, {
