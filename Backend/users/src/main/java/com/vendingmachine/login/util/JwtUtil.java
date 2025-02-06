@@ -16,10 +16,11 @@ public class JwtUtil {
     private static final String SECRET_KEY = "h9jcyU+8TCpyHhAtEAEmt6ZQjdBUsmsZjBYlVylfowY="; // Generates a secure key
     private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 12; // 12 hours
 
-    public String generateToken(String username, boolean isAdmin) {
+    public String generateToken(String username, boolean isAdmin, int userId) {
         return Jwts.builder()
                 .setSubject(username)
                 .claim("isAdmin", isAdmin)
+                .claim("userId", userId)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
@@ -43,7 +44,12 @@ public class JwtUtil {
     }
 
     public String extractUsername(String token) {
+
         return extractClaim(token, Claims::getSubject);
+    }
+
+    public int extractUserId(String token) {  //  Extract userId from token
+        return extractClaim(token, claims -> claims.get("userId", Integer.class));
     }
 
     public boolean extractIsAdmin(String token) {

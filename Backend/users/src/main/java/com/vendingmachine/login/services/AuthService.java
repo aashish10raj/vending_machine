@@ -47,7 +47,7 @@ public Optional<Users> authenticate(int userId, String password) {
 }
 
     public String generateJwtToken(Users user) {
-        return jwtUtil.generateToken(user.getName(), user.getRole());
+        return jwtUtil.generateToken(user.getName(), user.getRole(), user.getUserId());
     }
 
 }

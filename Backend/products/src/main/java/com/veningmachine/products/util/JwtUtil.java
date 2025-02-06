@@ -41,7 +41,9 @@ public class JwtUtil {
     public boolean validateToken(String token) {
         return extractExpiration(token).after(new Date());
     }
-
+    public int extractUserId(String token) {  //  Extract userId from token
+        return extractClaim(token, claims -> claims.get("userId", Integer.class));
+    }
     public String getTokenFromRequest(HttpServletRequest request) {
         String authorizationHeader = request.getHeader("Authorization");
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {

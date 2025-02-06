@@ -28,6 +28,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter { // ✅ Extend
         if (token != null && jwtUtil.validateToken(token)) {
             String username = jwtUtil.extractUsername(token);
             boolean isAdmin = jwtUtil.extractIsAdmin(token);
+            int userId = jwtUtil.extractUserId(token);
 
             List<SimpleGrantedAuthority> authorities = isAdmin
                     ? List.of(new SimpleGrantedAuthority("ROLE_ADMIN"))
@@ -37,6 +38,9 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter { // ✅ Extend
                     new UsernamePasswordAuthenticationToken(username, null, authorities);
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            request.setAttribute("userId", userId); //so that controllers can access the userId
+
         }
 
         chain.doFilter(request, response);

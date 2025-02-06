@@ -34,7 +34,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Allow OPTIONS requests
                                 .requestMatchers(HttpMethod.GET, "/vendingapi/products/**").permitAll() // Allow GET for all
                                 .requestMatchers(HttpMethod.POST, "/vendingapi/products/**").hasRole("ADMIN") // Restrict POST
-                                .requestMatchers(HttpMethod.PUT, "/vendingapi/products/**").hasRole("ADMIN") // Restrict PUT
+                                .requestMatchers(HttpMethod.PUT, "/vendingapi/products/**").authenticated()// Restrict PUT
                                 .requestMatchers(HttpMethod.DELETE, "/vendingapi/products/**").hasRole("ADMIN") // Restrict DELETE
                                 .anyRequest().authenticated()) // Secure all other endpoints
                 .addFilterBefore(new JwtAuthorizationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
