@@ -38,20 +38,20 @@ public class PurchaseService {
 //        int userId = jwtUtil.extractUserId(token.replace("Bearer ", ""));
 //        List<Map<String, Object>> cart = (List<Map<String, Object>>) request.get("cart");
 //
-//        // ✅ Convert totalAmount safely to avoid ClassCastException
+//        //  Convert totalAmount safely to avoid ClassCastException
 //        Number totalAmountRaw = (Number) request.get("totalAmount");
 //        double totalAmount = totalAmountRaw.doubleValue(); // Works for both Integer and Double
 //
-//        // ✅ Fetch user balance correctly
+//        //  Fetch user balance correctly
 //        Balance userBalance = getBalance(userId);
 //        if (userBalance.getBalance() < totalAmount) {
 //            return ResponseEntity.badRequest().body("Insufficient balance.");
 //        }
 //
-//        // ✅ Deduct the amount atomically
+//        //  Deduct the amount atomically
 //        userBalance = createOrUpdateBalance(userId, userBalance.getBalance() - totalAmount);
 //
-//        // ✅ Update product quantities
+//        //  Update product quantities
 //        for (Map<String, Object> item : cart) {
 //            int productId = (int) item.get("id");
 //            int quantityToBuy = (int) item.get("quantity");
@@ -67,22 +67,22 @@ public class PurchaseService {
         Number totalAmountRaw = (Number) request.get("totalAmount");
         double totalAmount = totalAmountRaw.doubleValue();
 
-        // ✅ Fetch user balance
+        //  Fetch user balance
         Balance userBalance = getBalance(userId);
         if (userBalance.getBalance() < totalAmount) {
             return ResponseEntity.badRequest().body("Insufficient balance.");
         }
 
-        // ✅ Deduct user balance atomically
+        //  Deduct user balance atomically
         userBalance = createOrUpdateBalance(userId, userBalance.getBalance() - totalAmount);
 
-        // ✅ Prepare headers with Authorization token
+        //  Prepare headers with Authorization token
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", token);
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Void> entity = new HttpEntity<>(headers);
 
-        // ✅ Update product quantities securely
+        // Update product quantities securely
         for (Map<String, Object> item : cart) {
             int productId = (int) item.get("id");
             int quantityToBuy = (int) item.get("quantity");
@@ -108,7 +108,7 @@ public class PurchaseService {
         Query query = new Query(Criteria.where("userId").is(userId));
         Balance balance = mongoTemplate.findOne(query, Balance.class);
 
-        // ✅ If no balance exists, create it with 0 balance to avoid null issues
+        //  If no balance exists, create it with 0 balance to avoid null issues
         return (balance != null) ? balance : createOrUpdateBalance(userId, 0.0);
     }
 
@@ -119,7 +119,7 @@ public class PurchaseService {
         Query query = new Query(Criteria.where("userId").is(userId));
         Update update = new Update().set("balance", amount).setOnInsert("userId", userId);
 
-        // ✅ Perform atomic upsert to avoid duplicate key errors
+        //  Perform atomic upsert to avoid duplicate key errors
         return mongoTemplate.findAndModify(query, update,
                 org.springframework.data.mongodb.core.FindAndModifyOptions.options().returnNew(true).upsert(true),
                 Balance.class);
