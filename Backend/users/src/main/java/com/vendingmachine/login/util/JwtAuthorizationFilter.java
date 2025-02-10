@@ -33,7 +33,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7); // Remove "Bearer " prefix
             String username = jwtUtil.extractUsername(token);
-            boolean isAdmin = jwtUtil.extractIsAdmin(token);  // Extract isAdmin claim
+            boolean isAdmin = jwtUtil.extractIsAdmin(token);
+            int userId = jwtUtil.extractUserId(token);// Extract isAdmin claim
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = new User(username, "", List.of());  // No roles for now
                 if (jwtUtil.isTokenValid(token, username)) {
@@ -41,6 +42,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     SecurityContextHolder.getContext().setAuthentication(authentication);
+                    request.setAttribute("userId", userId);
+
                     // If the token is valid and user is an admin, grant access to the admin routes
                     if (isAdmin) {
                         request.setAttribute("isAdmin", true);  // Add isAdmin to the request attributes

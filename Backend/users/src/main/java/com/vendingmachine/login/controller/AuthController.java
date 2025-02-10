@@ -42,6 +42,7 @@ public class AuthController {
             Map<String, Object> response = new HashMap<>();
             response.put("token", token);
             response.put("role", user.getRole() ? "admin" : "buyer");
+            response.put("user_id", user.getUserId());
             response.put("message", user.getRole() ? "Admin privileges granted" : "Buyer privileges granted");
 
             return ResponseEntity.ok(response);
