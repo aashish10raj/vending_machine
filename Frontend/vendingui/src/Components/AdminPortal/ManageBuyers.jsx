@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { fetchUsers, updateUserName, deleteUser, addUser } from "../../services/BuyersService";  
+import { fetchUsers, updateUserName, deleteUser, addUser, fetchUserBalance, updateUserBalance } from "../../services/BuyersService";  
 
 const ManageBuyers = () => {
   const [users, setUsers] = useState([]);
   const [showAll, setShowAll] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [balances, setBalances] = useState({});
+
   const [newUser, setNewUser] = useState({
     userId: "",
     name: "",
@@ -23,6 +25,42 @@ const ManageBuyers = () => {
     };
     getUsers();
   }, []);
+
+  useEffect(() => {
+    const getUsers = async () => {
+      try {
+        const usersData = await fetchUsers();
+        setUsers(usersData);
+  
+        // Fetch balances for all users
+        const balanceData = {};
+        await Promise.all(
+          usersData.map(async (user) => {
+            balanceData[user.userId] = await fetchUserBalance(user.userId);
+          })
+        );
+        setBalances(balanceData);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    getUsers();
+  }, []);
+  
+  
+  const handleUpdateBalance = async (userId) => {
+    const newBalance = prompt("Enter new balance:");
+    if (newBalance && !isNaN(newBalance)) {
+      try {
+        await updateUserBalance(userId, parseFloat(newBalance));
+        setBalances({ ...balances, [userId]: parseFloat(newBalance) });
+      } catch (error) {
+        console.error("Error updating balance:", error);
+      }
+    }
+  };
+  
+  
 
   const handleUpdateName = async (userId) => {
     const newName = prompt("Enter new name:");
@@ -133,29 +171,63 @@ const ManageBuyers = () => {
 
       <div className="row">
         {(showAll ? users : users.slice(0, 6)).map((user) => (
+          // <div key={user.userId} className="col-md-4 mb-4">
+          //   <div className="card h-100">
+          //     <div className="card-body">
+          //       <h5 className="card-title">{user.name}</h5>
+          //       <p className="card-text">User ID: {user.userId}</p>
+          //       <p className="card-text">Role: {user.isadmin ? "Admin" : "Buyer"}</p>
+          //       <div className="d-flex justify-content-between mt-3">
+          //         <button
+          //           className="btn btn-sm btn-warning"
+          //           onClick={() => handleUpdateName(user.userId)}
+          //         >
+          //           Update Name
+          //         </button>
+          //         <button
+          //           className="btn btn-sm btn-danger"
+          //           onClick={() => handleDeleteUser(user.userId)}
+          //         >
+          //           Delete
+          //         </button>
+          //       </div>
+          //     </div>
+          //   </div>
+          // </div>
           <div key={user.userId} className="col-md-4 mb-4">
-            <div className="card h-100">
-              <div className="card-body">
-                <h5 className="card-title">{user.name}</h5>
-                <p className="card-text">User ID: {user.userId}</p>
-                <p className="card-text">Role: {user.isadmin ? "Admin" : "Buyer"}</p>
-                <div className="d-flex justify-content-between mt-3">
-                  <button
-                    className="btn btn-sm btn-warning"
-                    onClick={() => handleUpdateName(user.userId)}
-                  >
-                    Update Name
-                  </button>
-                  <button
-                    className="btn btn-sm btn-danger"
-                    onClick={() => handleDeleteUser(user.userId)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+  <div className="card h-100">
+    <div className="card-body">
+      <h5 className="card-title">{user.name}</h5>
+      <p className="card-text">User ID: {user.userId}</p>
+      <p className="card-text">Role: {user.role ? "Admin" : "Buyer"}</p>
+      <p className="card-text">Balance: ₹{balances[user.userId] || 0}</p>
+
+      <div className="d-flex justify-content-between mt-3">
+        <button
+          className="btn btn-sm btn-warning"
+          onClick={() => handleUpdateName(user.userId)}
+        >
+          Update Name
+        </button>
+
+        <button
+          className="btn btn-sm btn-danger"
+          onClick={() => handleDeleteUser(user.userId)}
+        >
+          Delete
+        </button>
+      </div>
+
+      <button
+        className="btn btn-sm btn-info mt-2"
+        onClick={() => handleUpdateBalance(user.userId)}
+      >
+        Update Balance
+      </button>
+    </div>
+  </div>
+</div>
+
         ))}
       </div>
       <div className="text-center mt-4">
