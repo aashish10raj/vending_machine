@@ -4,6 +4,13 @@ import axios from "axios";
 const API_URL = "http://localhost:8080/vendingapi/products"; // For Spring Boot backend
 // const API_URL = "https://localhost:7077/api/Product"; // For .NET backend
 
+const token = localStorage.getItem('authToken');  // Assuming the token is stored in localStorage
+const config = {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+};
+
 // Fetch all products
 export const fetchProducts = async () => {
   try {
@@ -18,7 +25,7 @@ export const fetchProducts = async () => {
 // Add a new product
 export const addProduct = async (product) => {
   try {
-    const response = await axios.post(API_URL, product);
+    const response = await axios.post(API_URL, product, config);
     return response.data;
   } catch (error) {
     console.error("Error adding product:", error);
@@ -29,7 +36,7 @@ export const addProduct = async (product) => {
 // Update product price
 export const updateProductPrice = async (id, price) => {
   try {
-    const response = await axios.put(`${API_URL}/${id}/price?price=${price}`);
+    const response = await axios.put(`${API_URL}/${id}/price?price=${price}`,{}, config);
     return response.data;
   } catch (error) {
     console.error("Error updating price:", error);
@@ -40,7 +47,7 @@ export const updateProductPrice = async (id, price) => {
 // Update product quantity
 export const updateProductQuantity = async (id, quantity) => {
   try {
-    const response = await axios.put(`${API_URL}/${id}/quantity?quantity=${quantity}`);
+    const response = await axios.put(`${API_URL}/${id}/quantity?quantity=${quantity}`, {}, config);
     return response.data;
   } catch (error) {
     console.error("Error updating quantity:", error);
@@ -51,7 +58,7 @@ export const updateProductQuantity = async (id, quantity) => {
 // Delete a product
 export const deleteProduct = async (id) => {
   try {
-    const response = await axios.delete(`${API_URL}/${id}`);
+    const response = await axios.delete(`${API_URL}/${id}`, config);
     return response.data;
   } catch (error) {
     console.error("Error deleting product:", error);
