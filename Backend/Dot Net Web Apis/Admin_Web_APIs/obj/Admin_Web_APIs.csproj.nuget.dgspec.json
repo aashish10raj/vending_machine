@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\React\\vendingmachine\\Git\\vending_machine\\Backend\\Dot Net Web Apis\\Admin_Web_APIs\\Admin_Web_APIs.csproj": {}
+    "E:\\GIT_PROJECTS\\vendingmachine\\Git\\vending_machine\\Backend\\Dot Net Web Apis\\Admin_Web_APIs\\Admin_Web_APIs.csproj": {}
   },
   "projects": {
-    "E:\\React\\vendingmachine\\Git\\vending_machine\\Backend\\Dot Net Web Apis\\Admin_Web_APIs\\Admin_Web_APIs.csproj": {
+    "E:\\GIT_PROJECTS\\vendingmachine\\Git\\vending_machine\\Backend\\Dot Net Web Apis\\Admin_Web_APIs\\Admin_Web_APIs.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\React\\vendingmachine\\Git\\vending_machine\\Backend\\Dot Net Web Apis\\Admin_Web_APIs\\Admin_Web_APIs.csproj",
+        "projectUniqueName": "E:\\GIT_PROJECTS\\vendingmachine\\Git\\vending_machine\\Backend\\Dot Net Web Apis\\Admin_Web_APIs\\Admin_Web_APIs.csproj",
         "projectName": "Admin_Web_APIs",
-        "projectPath": "E:\\React\\vendingmachine\\Git\\vending_machine\\Backend\\Dot Net Web Apis\\Admin_Web_APIs\\Admin_Web_APIs.csproj",
+        "projectPath": "E:\\GIT_PROJECTS\\vendingmachine\\Git\\vending_machine\\Backend\\Dot Net Web Apis\\Admin_Web_APIs\\Admin_Web_APIs.csproj",
         "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "E:\\React\\vendingmachine\\Git\\vending_machine\\Backend\\Dot Net Web Apis\\Admin_Web_APIs\\obj\\",
+        "outputPath": "E:\\GIT_PROJECTS\\vendingmachine\\Git\\vending_machine\\Backend\\Dot Net Web Apis\\Admin_Web_APIs\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",

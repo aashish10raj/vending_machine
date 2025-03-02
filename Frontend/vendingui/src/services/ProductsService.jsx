@@ -1,8 +1,10 @@
 import axios from "axios";
 
 // Backend API URL (adjust according to your backend)
-const API_URL = "http://localhost:8080/vendingapi/products"; // For Spring Boot backend
-// const API_URL = "https://localhost:7077/api/Product"; // For .NET backend
+
+//const API_URL = "http://localhost:8080/vendingapi/products"; // For Spring Boot backend
+
+ const API_URL = "https://localhost:7077/api/Product"; // For .NET backend
 
 const token = localStorage.getItem('authToken');  // Assuming the token is stored in localStorage
 const config = {

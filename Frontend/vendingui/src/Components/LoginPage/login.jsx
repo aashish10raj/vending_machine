@@ -15,9 +15,14 @@ const LoginPage = () => {
       // Make the login API call
       const response = await axios.post(
         "http://localhost:8081/vendingmachine/auth/login",
+       
+        // {
+        //   user_id: parseInt(userId), // Ensure user_id is passed as an integer
+        //   password,
+        // },
         {
-          user_id: parseInt(userId), // Ensure user_id is passed as an integer
-          password,
+          Email: userId, // Change 'userId' to 'email' as expected by .NET backend
+          Password: password, // Ensure the field name is lowercase 'password'
         },
         {
           headers: {
@@ -28,15 +33,22 @@ const LoginPage = () => {
       );
 
       // Extract token and role from response
-      const { token, role } = response.data;
+      //const { token, role } = response.data;
+      const { token, IsAdmin } = response.data; // Ensure backend sends `isAdmin`
 
       // Store the token in localStorage for authentication
       localStorage.setItem("authToken", token);
 
       // Redirect based on user role
-      if (role === "admin") {
+      // if (role === "admin") {
+      //   navigate("/admin");
+      // } else if (role === "buyer") {
+      //   navigate("/buyer");
+      // }
+
+      if (IsAdmin) {
         navigate("/admin");
-      } else if (role === "buyer") {
+      } else {
         navigate("/buyer");
       }
     } catch (err) {
@@ -109,3 +121,7 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+
+//----------------------------------------------------------------//
+
